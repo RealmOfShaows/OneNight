@@ -1,3 +1,10 @@
+window.addEventListener("keydown", function (e) {
+  const keys = ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"];
+  if (keys.includes(e.key)) {
+    e.preventDefault();
+  }
+}, { passive: false });
+
 
 let start;
 let cont1;
@@ -6,20 +13,38 @@ let story1;
 let story2;
 let story3;
 let story4;
+let story5;
+let story6;
+let story7;
+let story8;
+let story9;
+
 
 let player;
 let sceneplay = 0;
 
 let img;
 let img2;
+let img3;
+let img4;
+let img5;
+
+let font;
 
 function preload(){
   img = loadImage('blueiris.png')
   img2 = loadImage('blueirisdark1.png')
+  img3 = loadImage('useArrowsToMove.png')
+  img4 = loadImage('bubbleClouds.png')
+  img5 = loadImage('bubbleCloudsDark.png')
+  
+  font = loadFont('lucon.ttf')
 }
 
 function setup() {
   createCanvas(400, 400);
+  
+  textFont(font)
   
   start = new Button(300, 90);
   cont1 = new Button(70, 280);
@@ -28,13 +53,18 @@ function setup() {
   story2 = new Button(200, 380);
   story3 = new Button(200, 20);
   story4 = new Button(200, 380);
+  story5 = new Button(30, 130);
+  story6 = new Button(100, 300);
+  story7 = new Button(270, 0);
+  story8 = new Button(390, 390);
+  story9 = new Button(300, 230);
   
   
   player = new Player(200, 200);
 }
 
 function draw() {
-  background(120);
+  background(0);
   
   scene1();
   
@@ -71,11 +101,12 @@ function scene1(){
   
   
   if(section == 1){
-    start.message('What is this?', 240, 370, 0)
+    image(img3, 0, 0, 150, 150)
+    start.message('What is this?', 240, 370, 255, 16)
   }else if(section == 2){
-    cont1.message('Ah, I see. Another one.', 100, 370, 0)
+    cont1.message('Ah, I see. Another one.', 100, 370, 255, 16)
   }else if(section == 3){
-    cont2.message('I wonder how long this one will keep me', 60, 100, 0)
+    cont2.message('I wonder how long this one will keep me', 10, 100, 255, 16)
   }else if(section == 4){
     scene2();
   }
@@ -106,16 +137,16 @@ function scene2(){
   }
   
   if(section2 == 1){
-    story1.message('I open my eyes into my own reflection', 70, 370, 255)
-    story1.message('And I feel as though I am trapped', 80, 390, 255)
+    story1.message('I open my eyes into my own reflection', 20, 370, 255, 16)
+    story1.message('And I feel as though I am trapped', 40, 390, 255, 16)
   }else if(section2 == 2){
-    story2.message('As Above', 170, 20, 0)
+    story2.message('As Above', 170, 20, 0, 16)
   }else if(section2 == 3){
     image(img2, 0, 0)
-    story3.message('So Below', 170, 380, 255)
+    story3.message('So Below', 170, 380, 255, 16)
   }else if(section2 == 4){
     image(img, 0, 0)
-    story4.message('If I try, maybe I can find a way out of here', 70, 20, 0)
+    story4.message('If I try, maybe I can find a way out of here', 0, 20, 0, 15)
   }else if(section2 == 5){
     scene3();
   }
@@ -126,10 +157,57 @@ function scene2(){
 
 function scene3(){
   let section3 = 1;
+  image(img4, 0, 0)
+  
+  if(story9.t == 1){
+      section3 = 2;
+    }
+  
+  
+  if(section3 == 1){
+    story5.show();
+    story6.show();
+    story7.show();
+    story8.show();
+    
+    if(story7.t == 1){
+      image(img5, 0, 0)
+      story5.t = 1;
+      story6.t = 1;
+      story7.t = 1;
+      story9.show();
+      story9.message('Or reality?', 50, 150, 105, 16);
+    }
+    
+    
+    if(story5.t == 0){
+      story5.message('I often drift in sleep like this', 20, 200, 105, 13)
+    }
+    if(story6.t == 0){
+      story6.message('Wondering all by myself', 250, 260, 105, 13)
+    }
+    if(story7.t == 0){
+      story7.close();
+      story7.message('Is this death?', 200, 80, 105, 16)
+    }
+    if(story8.t == 0){
+      story8.message('Scared, lost, hopeless, restless', 15, 360, 105, 10)
+    }
+  }else if(section3 == 2){
+    scene4();
+  }
+  
+  player.size = 12;
+}
+
+function scene4(){
   background(0)
   
   fill(255)
-  text('3', 200, 200)
+  text('4', 200, 200)
+  
+  player.playerSpeed = 3;
+  player.size = 6;
 }
 
 /////CLASSES/////
@@ -145,7 +223,7 @@ class Button{
   
   close(){
     if(dist(player.x, player.y, this.x, this.y) < this.radius * 5){
-      player.playerSpeed = 0.15;
+      player.playerSpeed = 0.10;
     }else{
       player.playerSpeed = 3;
     }
@@ -163,9 +241,9 @@ class Button{
     noStroke();
     if(this.t == 0){
       if(this.touch()){
-        fill('red')
+        fill('grey')
       }else{
-        fill('blue');
+        fill(105);
       }
     
       circle(this.x, this.y, this.radius * 2)
@@ -173,11 +251,11 @@ class Button{
     
   }
   
-  message(words, x, y, shade){
+  message(words, x, y, shade, size){
     if(this.touch() && this.t == 0){
       rectMode(CENTER)
       fill(shade)
-      textSize(16)
+      textSize(size)
       text(words, x, y)
       player.canMove = false
       if(mouseIsPressed){
