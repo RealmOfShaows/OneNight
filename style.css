@@ -114,3 +114,12 @@ p{
   color: white;
   text-align: center;
 }
+
+
+.links{
+  /* background-color: rgba(165, 42, 42, 0.164); */
+  display: flex;
+  width: 50%;
+  margin: auto;
+  justify-content: space-between;
+}
