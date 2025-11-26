@@ -240,7 +240,7 @@ function scene3(){
       story6.message('Wondering all by myself', 250, 260, 105, 13)
     }
     if(story7.t == 0){
-      //story7.close();
+      story7.close();
       story7.message('Is this death?', 200, 80, 105, 16)
     }
     if(story8.t == 0){
