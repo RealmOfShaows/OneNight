@@ -18,6 +18,21 @@ let story6;
 let story7;
 let story8;
 let story9;
+let story10;
+
+let puz1;
+let puz2;
+let puz3;
+let puz4;
+let puz5;
+let puz6;
+let puz7;
+let puz8;
+let puz9;
+let puz10;
+let puz11;
+let puz12;
+let puz13;
 
 
 let player;
@@ -28,6 +43,10 @@ let img2;
 let img3;
 let img4;
 let img5;
+let img6;
+let img7;
+let img8;
+let img9;
 
 let font;
 
@@ -37,6 +56,10 @@ function preload(){
   img3 = loadImage('useArrowsToMove.png')
   img4 = loadImage('bubbleClouds.png')
   img5 = loadImage('bubbleCloudsDark.png')
+  img6 = loadImage('whiteye.png')
+  img7 = loadImage('eyes.png')
+  img8 = loadImage('moon.png')
+  img9 = loadImage('shuteye.png')
   
   font = loadFont('lucon.ttf')
 }
@@ -58,6 +81,36 @@ function setup() {
   story7 = new Button(270, 0);
   story8 = new Button(390, 390);
   story9 = new Button(300, 230);
+  story10 = new Button(190, 300);
+  
+  puz1 = new Button(50, 45);
+  puz1.radius = 40;
+  puz2 = new Button(150, 67);
+  puz2.radius = 40;
+  puz3 = new Button(58, 147);
+  puz3.radius = 40;
+  puz4 = new Button(230, 135);
+  puz4.radius = 40;
+  puz5 = new Button(255, 42);
+  puz5.radius = 40;
+  
+  puz6 = new Button(350, 130);
+  puz6.radius = 40;
+  puz7 = new Button(140, 215);
+  puz7.radius = 40;
+  puz8 = new Button(253, 232);
+  puz8.radius = 40;
+  
+  puz9 = new Button(350, 270);
+  puz9.radius = 40;
+  puz10 = new Button(142, 340);
+  puz10.radius = 40;
+  puz11 = new Button(40, 297);
+  puz11.radius = 40;
+  puz12 = new Button(282, 358);
+  puz12.radius = 40;
+  
+  puz13 = new Button(350, 50)
   
   
   player = new Player(200, 200);
@@ -187,7 +240,7 @@ function scene3(){
       story6.message('Wondering all by myself', 250, 260, 105, 13)
     }
     if(story7.t == 0){
-      story7.close();
+      //story7.close();
       story7.message('Is this death?', 200, 80, 105, 16)
     }
     if(story8.t == 0){
@@ -201,13 +254,73 @@ function scene3(){
 }
 
 function scene4(){
-  background(0)
+  let section4 = 1;
+  background(100)
   
-  fill(255)
-  text('4', 200, 200)
+  if(story10.t == 1){
+    section4 = 2;
+  }
+  if(puz13.t == 1){
+    section4 = 3;
+  }
+  if(puz1.t == 1 || puz2.t == 1 || puz3.t == 1 || puz4.t == 1 || puz5.t == 1 || puz6.t == 1 || puz7.t == 1 || puz8.t == 1 || puz9.t == 1 || puz10.t == 1 || puz11.t == 1 || puz12.t == 1){
+    section4 = 5;
+  }
+  
+  
+  if(section4 == 1){
+    textAlign(CENTER);
+    fill(255);
+    text('I lose track of time', 200, 200);
+    image(img6, 160, 250, 100, 100)
+    story10.message('Yet time watches me', 200, 230, 255, 16)
+  }else if(section4 == 2){
+    background(0)
+    text('Hide', 200, 200)
+    image(img7, 0, 0)
+    image(img9, 300, -10, 100, 100)
+    puz1.message("No.", 145, 150, 255, 16)
+    puz2.message("No.", 145, 150, 255, 16)
+    puz3.message("No.", 145, 150, 255, 16)
+    puz4.message("No.", 145, 150, 255, 16)
+    puz5.message("No.", 145, 150, 255, 16)
+    puz6.message("No.", 145, 150, 255, 16)
+    puz7.message("No.", 145, 150, 255, 16)
+    puz8.message("No.", 145, 150, 255, 16)
+    puz9.message("No.", 145, 150, 255, 16)
+    puz10.message("No.", 145, 150, 255, 16)
+    puz11.message("No.", 145, 150, 255, 16)
+    puz12.message("No.", 145, 150, 255, 16)
+    
+    puz13.message("Good.", 145, 150, 255, 16)
+  }else if(section4 == 3){
+    scene5();
+  }else if(section4 == 5){
+    lose();
+  }
   
   player.playerSpeed = 3;
   player.size = 6;
+}
+
+function scene5(){
+  background(255)
+  
+  fill(0)
+  textAlign(CENTER)
+  text('Can you ever wake up?', 200, 200)
+}
+
+
+function lose(){
+  background(0);
+  
+  fill(255)
+  textAlign(CENTER)
+  text('This nightmare', 200, 185)
+  text('You cant wake from', 200, 200)
+  text('Unless you try once more', 200, 215)
+  image(img8, 160, 260, 100, 100)
 }
 
 /////CLASSES/////
