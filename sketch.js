@@ -19,6 +19,9 @@ let story7;
 let story8;
 let story9;
 let story10;
+let story11;
+let story12;
+let story13;
 
 let puz1;
 let puz2;
@@ -33,6 +36,8 @@ let puz10;
 let puz11;
 let puz12;
 let puz13;
+
+let ending;
 
 
 let player;
@@ -50,6 +55,20 @@ let img9;
 
 let font;
 
+let track;
+let click;
+let buzz;
+let alarm;
+
+let section = 1
+let section2 = 1
+let section3 = 1
+let section4 = 1
+let section5 = 1
+let section6 = 1
+
+let t = 0;
+
 function preload(){
   img = loadImage('blueiris.png')
   img2 = loadImage('blueirisdark1.png')
@@ -62,6 +81,11 @@ function preload(){
   img9 = loadImage('shuteye.png')
   
   font = loadFont('lucon.ttf')
+  
+  track = loadSound('piano.mp3')
+  click = loadSound('click.mp3')
+  buzz = loadSound('buzz.mp3')
+  alarm = loadSound('alarm.mp3')
 }
 
 function setup() {
@@ -82,6 +106,10 @@ function setup() {
   story8 = new Button(390, 390);
   story9 = new Button(300, 230);
   story10 = new Button(190, 300);
+  story11 = new Button(200, 300);
+  story12 = new Button(200, 350);
+  story13 = new Button(200, 375);
+  story13.radius = 25;
   
   puz1 = new Button(50, 45);
   puz1.radius = 40;
@@ -112,13 +140,25 @@ function setup() {
   
   puz13 = new Button(350, 50)
   
+  ending = new Button(200, 100)
+  
   
   player = new Player(200, 200);
+  
+  track.loop();
+  track.setVolume(0.01)
+  click.setVolume(0.01)
+  buzz.loop();
+  buzz.setVolume(0)
+  alarm.loop();
+  alarm.setVolume(0)
 }
 
 function draw() {
   background(0);
   
+  
+  t += 1
   scene1();
   
   //test.backChange(0)
@@ -140,7 +180,7 @@ function draw() {
 /////CUSTOM FUNCTIONS/////
 
 function scene1(){
-  let section = 1
+  
   
   if(start.t == 1){
     section = 2;
@@ -172,7 +212,6 @@ function scene1(){
 }
 
 function scene2(){
-  let section2 = 1;
   
   image(img, 0, 0)
   
@@ -209,7 +248,6 @@ function scene2(){
 }
 
 function scene3(){
-  let section3 = 1;
   image(img4, 0, 0)
   
   if(story9.t == 1){
@@ -230,6 +268,8 @@ function scene3(){
       story7.t = 1;
       story9.show();
       story9.message('Or reality?', 50, 150, 105, 16);
+      track.setVolume(0);
+      buzz.setVolume(0.005)
     }
     
     
@@ -254,8 +294,9 @@ function scene3(){
 }
 
 function scene4(){
-  let section4 = 1;
   background(100)
+  
+  
   
   if(story10.t == 1){
     section4 = 2;
@@ -269,12 +310,16 @@ function scene4(){
   
   
   if(section4 == 1){
+    buzz.setVolume(0);
+    track.setVolume(0.01)
     textAlign(CENTER);
     fill(255);
     text('I lose track of time', 200, 200);
     image(img6, 160, 250, 100, 100)
     story10.message('Yet time watches me', 200, 230, 255, 16)
   }else if(section4 == 2){
+    buzz.setVolume(0.005);
+    track.setVolume(0)
     background(0)
     text('Hide', 200, 200)
     image(img7, 0, 0)
@@ -306,10 +351,77 @@ function scene4(){
 function scene5(){
   background(255)
   
-  fill(0)
+  buzz.setVolume(0);
+  track.setVolume(0.01)
+  
+  if(story11.t == 1){
+    section5 = 2;
+  }
+  if(story12.t == 1){
+    section5 = 3;
+  }
+  if(story13.t == 1){
+    section5 = 4;
+  }
+  
   textAlign(CENTER)
-  text('Can you ever wake up?', 200, 200)
+  if(section5 == 1){
+    fill(0)
+    text('Can I ever wake up?', 200, 200)
+    circle(200, 300, 100)
+    story11.message("Can I reach the surface?", 200, 150, 0, 16)
+  }else if(section5 == 2){
+    fill(0)
+    text('Can I ever wake up?', 200, 200)
+    text('Can I reach the surface?', 200, 150)
+    circle(200, 350, 50)
+    story12.message("Or will I continue to fall?", 200, 100, 0, 16)
+  }else if(section5 == 3){
+    fill(0)
+    text('Can I ever wake up?', 200, 200)
+    text('Can I reach the surface?', 200, 150)
+    text('Or will I continue to fall?', 200, 100)
+    circle(200, 375, 25)
+    story13.message("Into", 200, 50, 0, 16)
+  }else if(section5 == 4){
+    end();
+  }
+  
+  
 }
+
+function end(){
+  background(0);
+  //let t = millis()
+  
+  buzz.setVolume(0);
+  track.setVolume(0.01)
+  
+  if(ending.t == 1){
+    section6 = 2
+  }
+  
+  if(section6 == 1){
+    fill(255)
+    text('An Eternal Rest', 200, 200)
+    circle(200, 100, 50);
+    ending.message("Game by Xavier Johnson", 200, 250, 255, 16)
+  }
+  if(section6 == 2){
+    alarm.setVolume(0.001)
+    fill(255)
+    text('An Eternal Rest', 200, 200)
+    text('Game by Xavier Johnson', 200, 250)
+  }
+  
+  if(t > 11029){
+    text('Go back to sleep', 200, 350)
+  }
+  
+  console.log(t)
+  
+}
+
 
 
 function lose(){
@@ -374,6 +486,7 @@ class Button{
       if(mouseIsPressed){
         this.t += 1
         player.canMove = true
+        click.play();
       }
     }
   }
@@ -405,19 +518,19 @@ class Player{
   
   moveAndWrap(){
     if(this.canMove == true){
-      if(keyIsDown(LEFT_ARROW) == true){
+      if(keyIsDown(LEFT_ARROW) == true || keyIsDown(65) == true){
           this.x -= this.playerSpeed;
         }
   
-      if(keyIsDown(RIGHT_ARROW) == true){
+      if(keyIsDown(RIGHT_ARROW) == true || keyIsDown(68) == true){
         this.x += this.playerSpeed;
       }
   
-      if(keyIsDown(UP_ARROW) == true){
+      if(keyIsDown(UP_ARROW) == true || keyIsDown(87) == true){
         this.y -= this.playerSpeed;
       }
   
-      if(keyIsDown(DOWN_ARROW) == true){
+      if(keyIsDown(DOWN_ARROW) == true || keyIsDown(83) == true){
         this.y += this.playerSpeed;
       }
     }
